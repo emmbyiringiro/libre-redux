@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Grid from "@material-ui/core/Grid";
+import ProductList from "./components/products/ProductList";
+import CartList from "./components/cart/CartList";
+import { Provider } from "react-redux";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import store from "./../src/global-store/store";
+
+import { data } from "./data";
+class App extends React.Component {
+  state = {
+    products: data.rows,
+    cartItems: []
+  };
+
+  render() {
+    return (
+      <Provider store={store}>
+        <Grid container spacing={3}>
+          <Grid xs={3} item>
+            <CartList removeFromCart={this.removeFromCart} />
+          </Grid>
+          <Grid xs={9} item>
+            <ProductList addToCart={this.addToCart} />
+          </Grid>
+        </Grid>
+      </Provider>
+    );
+  }
 }
 
 export default App;
